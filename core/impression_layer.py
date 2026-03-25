@@ -114,7 +114,7 @@ class ImpressionLayer:
         sql = """
             SELECT i.impression_id, i.timestamp, i.gist, i.pointer, rank FROM impressions i
             JOIN impression_fts fts ON i.rowid = fts.rowid
-            WHERE impression_fts MATCH ?
+            WHERE fts.content_text MATCH ?
         """
         params = [query_lower]
         
