@@ -1,0 +1,22 @@
+# 个人记忆数据（永不提交）
+~/.bio-memory/
+.bio-memory/
+*.db
+*.db-journal
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+venv/
+bio-memory-env/
+
+# 测试数据（太大）
+test_data/
+*.log
+
+# IDE
+.vscode/
+.idea/
