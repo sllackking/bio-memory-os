@@ -4,18 +4,21 @@
 *.db
 *.db-journal
 
+# 测试数据（太大）
+test_data/
+*.txt
+*.md # 如果包含个人对话
+
 # Python
 __pycache__/
 *.pyc
 *.egg-info/
 dist/
 build/
+
+# 虚拟环境
 venv/
 bio-memory-env/
-
-# 测试数据（太大）
-test_data/
-*.log
 
 # IDE
 .vscode/

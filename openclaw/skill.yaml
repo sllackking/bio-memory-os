@@ -1,0 +1,58 @@
+name: bio-memory-os
+version: 0.1.0
+description: BMO 仿生记忆操作系统 - 防128k溢出，支持模糊回忆，十年可验证记忆
+
+config_schema:
+  working_memory:
+    max_tokens:
+      type: integer
+      default: 100000
+    max_chunks:
+      type: integer
+      default: 5
+
+  eternal_layer:
+    base_path:
+      type: string
+      default: "~/.bio-memory/eternal"
+
+  impression_layer:
+    db_path:
+      type: string
+      default: "~/.bio-memory/impressions.db"
+
+hooks:
+  on_session_start:
+    action: "init_bmo"
+    script: "/home/ai/bio-memory-os/venv/bin/python3 -c 'from bio_memory_os.openclaw.adapter import bmo; print(\"[BMO] 会话启动，记忆系统加载完成\")'"
+
+  pre_message:
+    action: "process_message"
+    script: "/home/ai/bio-memory-os/venv/bin/python3 -c 'from bio_memory_os.openclaw.adapter import bmo; import json, sys; data = json.load(sys.stdin); ctx = bmo.process_message(data[\"role\"], data[\"content\"]); print(json.dumps(ctx))'"
+
+  post_message:
+    action: "store_message"
+    script: "/home/ai/bio-memory-os/venv/bin/python3 -c 'from bio_memory_os.openclaw.adapter import bmo; import json, sys; data = json.load(sys.stdin); if data[\"role\"] == \"user\" or data[\"role\"] == \"assistant\": bmo.store_memory(data[\"content\"], title=f\"{data[\"role\"]} message\", tags=[\"chat\"]);'"
+
+tools:
+  - name: bmo_recall
+    description: BMO 模糊回忆历史记忆
+    parameters:
+      query:
+        type: string
+        description: "模糊查询关键词，例如：大概上周关于记忆架构的讨论"
+
+  - name: bmo_store
+    description: BMO 手动存储重要记忆
+    parameters:
+      content:
+        type: string
+        description: "要存储的内容"
+      title:
+        type: string
+        description: "记忆标题"
+      tags:
+        type: array
+        items:
+          type: string
+        description: "记忆标签"
