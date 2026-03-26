@@ -79,9 +79,14 @@ BMO方案：
 - 支持多语言扩展，目前已支持Python，可快速添加其他语言
 
 ## 🚀 快速安装
-### 1. 克隆项目
+### 方法1：直接pip安装（推荐）
 ```bash
-git clone https://github.com/你的用户名/bio-memory-os.git
+pip install git+https://github.com/sllackking/bio-memory-os.git
+```
+
+### 方法2：克隆源码安装
+```bash
+git clone https://github.com/sllackking/bio-memory-os.git
 cd bio-memory-os
 ```
 
